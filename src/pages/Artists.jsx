@@ -3,7 +3,7 @@ import '../styles/Artists.css';
 import useFetch from '../hooks/useFetch';
 import { useState } from 'react';
 
-function Artists({ toggleFollow, followedArtist }) {
+function Artists() {
 
     const [searchTerm, setSearchTerm] = useState('');
     const { data: artists, loading, error } = useFetch('http://localhost:3001/artists');
@@ -27,8 +27,6 @@ function Artists({ toggleFollow, followedArtist }) {
                             artistImg={artist.image}
                             artistName={artist.name}
                             slug={artist.slug}
-                            toggleFollow={toggleFollow}
-                            isFollowed={followedArtist.includes(artist.slug)}
                         />
                     ))
                     }

@@ -1,16 +1,15 @@
 import "../styles/Home.css";
 import ArtistCard from "../components/ArtistCard";
-import { useState, useEffect } from "react";
+import useFetch from '../hooks/useFetch';
 
-function Home({ toggleFollow, followedArtist }) {
 
-    const [artistData, setArtistData] = useState("");
-    useEffect(() => {
-        fetch('http://localhost:3001/artists')
-            .then(response => response.json())
-            .then(data => setArtistData(data));
-    }, []);
+function Home() {
 
+    const { data: artistData, loading, error } = useFetch('http://localhost:3001/artists')
+
+
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>Error: {error}</p>
 
     return (
         <div>
@@ -28,8 +27,6 @@ function Home({ toggleFollow, followedArtist }) {
                         artistImg={art.image}
                         artistName={art.name}
                         slug={art.slug}
-                        toggleFollow={toggleFollow}
-                        isFollowed={followedArtist.includes(art.slug)}
                     />
                 )))}
             </div>
