@@ -1,0 +1,83 @@
+{
+    "artists": [
+        {
+            "id": 1,
+            "slug": "krsna",
+            "name": "Krsna",
+            "image": "/artists/Krsna.jpg"
+        },
+        {
+            "id": 2,
+            "slug": "seedhemaut",
+            "name": "Seedhe Maut",
+            "image": "/artists/SM.jpg"
+        },
+        {
+            "id": 3,
+            "slug": "naamsujal",
+            "name": "Naam Sujal",
+            "image": "/artists/NaamSujal.jpg"
+        }
+    ],
+    "tracks": [
+        {
+            "id": 1,
+            "slug": "BoomShaka",
+            "title": "Boom Shaka",
+            "artist": "Krsna",
+            "type": "Single",
+            "releaseYear": "2026",
+            "coverImage": "/MusicCover/placeHolder.jpg"
+        },
+        {
+            "id": 2,
+            "slug": "TourShit",
+            "title": "Tour Shit",
+            "artist": "Seedhe Maut",
+            "type": "Single",
+            "releaseYear": "2024",
+            "coverImage": "/MusicCover/placeHolder.jpg"
+        },
+        {
+            "id": 3,
+            "slug": "mamafication",
+            "title": "Mamafication",
+            "artist": "Naam Sujal",
+            "type": "Album",
+            "releaseYear": "2026",
+            "coverImage": "/MusicCover/placeHolder.jpg"
+        }
+    ],
+    "events": [
+        {
+            "id": 1,
+            "slug": "desi-hip-hop-delhi-rap-carnival",
+            "title": "Desi Hip Hop Delhi Rap Carnival",
+            "date": "2026-08-14",
+            "venue": "NDMC Convention Centre",
+            "city": "Delhi",
+            "artist": "KR$NA, Seedhe Maut",
+            "image": "/EventCover/placeHolder.jpg"
+        },
+        {
+            "id": 2,
+            "slug": "desi-hip-hop-delhi-beat-fest",
+            "title": "Desi Hip Hop Delhi Beat Fest",
+            "date": "2026-09-05",
+            "venue": "Pragati Maidan",
+            "city": "Delhi",
+            "artist": "Raftaar, Naam Sujal",
+            "image": "/EventCover/placeHolder.jpg"
+        },
+        {
+            "id": 3,
+            "slug": "desi-hip-hop-delhi-cypher-showcase",
+            "title": "Desi Hip Hop Delhi Street Cypher",
+            "date": "2026-10-11",
+            "venue": "India Habitat Centre",
+            "city": "Delhi",
+            "artist": "Arpit Bala, Chaar Diwari",
+            "image": "/EventCover/placeHolder.jpg"
+        }
+    ]
+}

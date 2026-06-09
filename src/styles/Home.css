@@ -1,0 +1,33 @@
+.hero {
+    background-image: url(/artists/Seedhe_Maut_Poster.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+.hero h1, .hero p {
+    position: relative;
+    z-index: 1;
+    color: #ffffff;
+}
+
+.features{
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    justify-content: center;
+    align-items: center;
+}
