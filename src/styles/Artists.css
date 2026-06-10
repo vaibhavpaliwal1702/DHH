@@ -10,6 +10,7 @@
     width: 50vw;
     height: 40px;
     padding: 0.5rem;
+    margin-top: 1rem;
     margin-left: 2rem;
     font-size: 1rem;
     color: white;
@@ -31,21 +32,12 @@
     transform: scale(1.02);
 }
 
-.search-btn{
-    width: 100px;
-    height: 40px;
-    margin-left: 1rem;
-    padding: 5px;
-    background-color: #a855f7;
-    border: none;
-    outline: none;
-    font-family: inherit;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: transform 0.3s ease;
-}
-
-.search-btn:hover{
-    cursor: pointer;
-    transform: scale(1.1);
+.artists{
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-left: 4px solid #9333ea;
+    margin-top: 1rem;
+    margin-left: 2rem;
+    padding-left: 1rem;
 }

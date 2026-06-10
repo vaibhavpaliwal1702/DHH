@@ -14,10 +14,13 @@ function Home() {
     return (
         <div>
             <div className="hero">
-                <h1>Discover the World of Music with DHH</h1>
-                <p>Explore the latest news, reviews, and insights on your favorite artists, albums, and concerts.</p>
+                <h1 className="hero-title">Discover the World of Music with DHH</h1>
+                <p className="hero-description">Explore the latest news, reviews, and insights on your favorite artists, albums, and concerts.</p>
             </div>
 
+            <div className="featured-artists">
+                <h2>Featured Artists</h2>
+            </div>
             <div className="features">
                 {artistData.length === 0 && (
                     <p>No Artist Available at the moment.</p>)}

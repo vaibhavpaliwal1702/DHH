@@ -1,14 +1,17 @@
 .hero {
-    background-image: url(/artists/Seedhe_Maut_Poster.jpg);
+    background-image: url(/artists/portada_playlist.jfif);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: top center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 90vh;
+    height: 40vh;
     position: relative;
+    background-color: #0a0a0a;
+    padding-top: 80px;
+    margin-top: -60px;
 }
 
 .hero::before {
@@ -28,6 +31,29 @@
     display: flex;
     gap: 2rem;
     padding: 2rem;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+}
+
+.hero-title{
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.hero-description{
+    font-size: 1rem;
+    opacity: 0.8;
+    text-align: center;
+}
+
+.featured-artists{
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-left: 4px solid #9333ea;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    padding-left: 1rem;
 }

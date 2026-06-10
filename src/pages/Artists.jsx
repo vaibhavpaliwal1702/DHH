@@ -18,6 +18,9 @@ function Artists() {
 
     return (
         <div>
+            <div className="artists">
+                <h2>Artists</h2>
+            </div>
             <input type="text" placeholder="Search artists..." className="search-bar" onChange={(e) => setSearchTerm(e.target.value)} />
             {filteredArtists.length > 0 ? (
                 <div className='Art-features'>

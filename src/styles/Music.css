@@ -17,7 +17,7 @@
     flex-direction: column;
     box-shadow: 0 4px 15px rgb(255 255 255 / 50%);
     transition: transform 0.3s ease;
-    width: 500px;
+    width: fit-content;
 }
 
 .cover_image{
@@ -31,6 +31,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: row;
+    margin-left: 1.5rem;
 }
 
 .btn{
@@ -52,4 +53,66 @@
     background-color: #a855f7;
     border-color: #a855f7;
     cursor: pointer;
+}
+
+.search-bar-music{
+    width: 50vw;
+    height: 40px;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: white;
+    background-color: transparent;
+    border: 1px solid #a855f7;
+    transition: transform 0.3s ease;
+}
+
+.search-bar-music:focus{
+    outline: none;
+    border-color: #a855f7;
+    box-shadow: 0 0 5px #a855f7;
+}
+
+.search-bar-music:hover{
+    outline: none;
+    border-color: #a855f7;
+    box-shadow: 0 0 5px #a855f7;
+    transform: scale(1.02);
+}
+
+.music-header{
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-left: 4px solid #9333ea;
+    margin-top: 1rem;
+    margin-left: 2rem;
+    padding-left: 1rem;
+}
+
+.tracks{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-left: 1.2rem;
+}
+
+.track-title{
+    text-align: center;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.track-artist{
+    opacity: 0.7;
+    font-size: 0.85rem;
+}
+
+.track-meta {
+    font-size: 0.8rem;
+    opacity: 0.5;
 }
