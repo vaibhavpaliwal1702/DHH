@@ -6,7 +6,7 @@ import useFetch from '../hooks/useFetch';
 function Events() {
 
     const [searchTerm, setSearchTerm] = useState('');
-    const { data: eventData, loading, error } = useFetch('http://localhost:3001/events')
+    const { data: eventData, loading, error } = useFetch(`${import.meta.env.VITE_API_URL}/events`)
 
 
     if (loading) return <p>Loading...</p>

@@ -6,7 +6,7 @@ import { useState } from 'react';
 function Artists() {
 
     const [searchTerm, setSearchTerm] = useState('');
-    const { data: artists, loading, error } = useFetch('http://localhost:3001/artists');
+    const { data: artists, loading, error } = useFetch(`${import.meta.env.VITE_API_URL}/artists`);
     
     
     if (loading) return <p>Loading...</p>

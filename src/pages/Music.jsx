@@ -8,7 +8,7 @@ function Music() {
     const [searchTerm, setSearchTerm] = useState('');
     const [activeFilter, setActiveFilter] = useState('All');
 
-    const { data: musicData, loading, error } = useFetch('http://localhost:3001/tracks')
+    const { data: musicData, loading, error } = useFetch(`${import.meta.env.VITE_API_URL}/tracks`)
 
     
     if (loading) return <p>Loading...</p>
