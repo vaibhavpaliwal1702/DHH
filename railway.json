@@ -1,0 +1,9 @@
+{
+    "build": {
+        "builder": "NIXPACKS",
+        "buildCommand": "npm install"
+    },
+    "deploy": {
+        "startCommand": "json-server --watch db.json --port $PORT --host 0.0.0.0"
+    }
+}
