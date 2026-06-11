@@ -8,7 +8,7 @@ function ArtistDetail() {
 
     const { slug } = useParams();
 
-    const { data: artistData, loading, error } = useFetch(`http://localhost:3001/artists?slug=${slug}`)
+    const { data: artistData, loading, error } = useFetch(`${import.meta.env.VITE_API_URL}/artists?slug=${slug}`)
 
     
     if (loading) return <p>Loading...</p>

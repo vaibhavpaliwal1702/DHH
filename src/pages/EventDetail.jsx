@@ -4,7 +4,7 @@ import useFetch from '../hooks/useFetch';
 function EventDetail() {
     
     const { slug } = useParams();
-    const { data: eventData, loading, error } = useFetch(`http://localhost:3001/events?slug=${slug}`)
+    const { data: eventData, loading, error } = useFetch(`${import.meta.env.VITE_API_URL}/events?slug=${slug}`)
 
     const event = eventData[0];
 
