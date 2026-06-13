@@ -54,6 +54,7 @@ For cards, use: {"type": "artist"|"track"|"event", "slug": "the-slug"}`,
             });
 
             const data = await response.json();
+            console.log('API response:', data);
             const text = data.content[0].text;
             const parsed = JSON.parse(text);
 
