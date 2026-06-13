@@ -14,8 +14,8 @@ function Home() {
     return (
         <div>
             <div className="hero">
-                <h1 className="hero-title">Discover the World of Music with DHH</h1>
-                <p className="hero-description">Explore the latest news, reviews, and insights on your favorite artists, albums, and concerts.</p>
+                <h1 className="hero-title">From the streets. For the culture.</h1>
+                <p className="hero-description">These artists started with nothing and became the voice of a generation. Explore their stories, their music, and where they're going next.</p>
             </div>
 
             <div className="featured-artists">
