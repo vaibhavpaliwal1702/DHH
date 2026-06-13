@@ -73,6 +73,8 @@
     flex: 1;
     padding: 1rem;
     overflow-y: auto;
+    display: flex; 
+    flex-direction: column;
 }
 
 .ask-dhh-input-row {
@@ -112,4 +114,31 @@
 
 .ask-dhh-send:hover {
     background-color: #9333ea;
+}
+
+.ask-dhh-msg {
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.ask-dhh-msg--user {
+    background-color: #a855f7;
+    color: #fff;
+    align-self: flex-end;
+    margin-left: 2rem;
+}
+
+.ask-dhh-msg--assistant {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+    margin-right: 2rem;
+}
+
+.ask-dhh-thinking {
+    color: #888;
+    font-size: 0.85rem;
+    font-style: italic;
 }
