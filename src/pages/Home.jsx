@@ -2,10 +2,9 @@ import "../styles/Home.css";
 import ArtistCard from "../components/ArtistCard";
 import useFetch from '../hooks/useFetch';
 
-
 function Home() {
 
-    const { data: artistData, loading, error } = useFetch(`${import.meta.env.VITE_API_URL}/artists`)
+    const { data: artistData, loading, error } = useFetch(`${import.meta.env.VITE_API_URL}/artists`);
 
 
     if (loading) return <p>Loading...</p>

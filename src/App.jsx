@@ -6,6 +6,7 @@ import Events from "./pages/Events";
 import ArtistDetail from './pages/ArtistDetail.jsx';
 import EventDetail from './pages/EventDetail.jsx';
 import NotFound from './pages/NotFound.jsx';
+import AskDHH from "./components/AskDHH";
 import { FollowProvider } from "./context/FollowContext";
 import { Routes, Route } from "react-router-dom";
 
@@ -16,8 +17,8 @@ function App() {
         <Navbar />
         <div className="content">
           <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/artists" element={<Artists/>} />
+            <Route path="/" element={<Home />} />
+            <Route path="/artists" element={<Artists />} />
             <Route path="/music" element={<Music />} />
             <Route path="/events" element={<Events />} />
             <Route path="/artists/:slug" element={<ArtistDetail />} />
@@ -25,6 +26,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
+        <AskDHH />
       </FollowProvider>
     </div>
   );
