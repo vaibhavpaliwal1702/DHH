@@ -28,10 +28,9 @@ function AskDHH() {
 
             // 2. Build context string
             const context = `
-ARTISTS: ${JSON.stringify(artists)}
-TRACKS: ${JSON.stringify(tracks)}
-EVENTS: ${JSON.stringify(events)}
-    `;
+                    ARTISTS: ${JSON.stringify(artists)}
+                    TRACKS: ${JSON.stringify(tracks)}
+                    EVENTS: ${JSON.stringify(events)}`;
 
             // 3. Call Claude API
             const response = await fetch('/api/ask', {
@@ -41,12 +40,12 @@ EVENTS: ${JSON.stringify(events)}
                     model: 'claude-sonnet-4-6',
                     max_tokens: 1000,
                     system: `You are Ask DHH, an assistant for a Desi Hip Hop website. 
-Answer questions ONLY about the artists, tracks, and events provided in the context.
-If the answer is not in the context, say you don't have that information.
-Never make up information. Refuse inappropriate requests politely.
-Always respond in this exact JSON format:
-{"message": "your response here", "cards": []}
-For cards, use: {"type": "artist"|"track"|"event", "slug": "the-slug"}`,
+                            Answer questions ONLY about the artists, tracks, and events provided in the context.
+                            If the answer is not in the context, say you don't have that information.
+                            Never make up information. Refuse inappropriate requests politely.
+                            Always respond in this exact JSON format:
+                            {"message": "your response here", "cards": []}
+                            For cards, use: {"type": "artist"|"track"|"event", "slug": "the-slug"}`,
                     messages: [
                         { role: 'user', content: `Context:\n${context}\n\nQuestion: ${input}` }
                     ]
@@ -54,7 +53,6 @@ For cards, use: {"type": "artist"|"track"|"event", "slug": "the-slug"}`,
             });
 
             const data = await response.json();
-            console.log('API response:', data);
             const text = data.content[0].text;
             const parsed = JSON.parse(text);
 
