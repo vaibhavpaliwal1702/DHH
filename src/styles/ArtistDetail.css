@@ -1,9 +1,10 @@
 .ArtistDetailDesign {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    padding: 4rem 2rem;
+    padding: 2rem 2rem;
     gap: 2rem;
+    padding-bottom: 6rem
 }
 
 .artist_image {
@@ -17,4 +18,33 @@
     font-size: 2.5rem;
     font-weight: bold;
     color: #f0f0f0;
+    border-bottom: 2px solid #a855f7;
+    padding-bottom: 0.5rem;
+    margin: 1rem;
+    width: fit-content;
+}
+
+.artist_bio{
+    font-size: 1.2rem;
+    color: #d0d0d0;
+    line-height: 1.5;
+}
+
+.back_link{
+    width: fit-content;
+    padding: 5px;
+    background-color: #a855f7;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.back_link:hover{
+    cursor: pointer;
+    transform: scale(1.1);
 }

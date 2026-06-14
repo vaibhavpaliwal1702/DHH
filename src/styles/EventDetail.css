@@ -1,0 +1,45 @@
+.event_image{
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.back_link_event{
+    width: fit-content;
+    padding: 5px;
+    background-color: #a855f7;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.back_link_event:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.EventDetailScreen {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2rem 2rem;
+    gap: 2rem;
+    padding-bottom: 6rem
+}
+
+.event_info{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.event_date{
+    font-size: 1.2rem;
+    color: #a855f7;
+}

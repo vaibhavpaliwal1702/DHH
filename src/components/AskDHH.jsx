@@ -1,6 +1,6 @@
 import '../styles/AskDhh.css';
-import { useState } from 'react';
-import {Link} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function AskDHH() {
     const [isOpen, setIsOpen] = useState(false);
@@ -9,6 +9,16 @@ function AskDHH() {
     const [thinking, setThinking] = useState(false);
     const [dbData, setDbData] = useState({ artists: [], tracks: [], events: [] });
 
+    useEffect(() => {
+        Promise.all([
+            fetch(`${import.meta.env.VITE_API_URL}/artists`).then(r => r.json()),
+            fetch(`${import.meta.env.VITE_API_URL}/tracks`).then(r => r.json()),
+            fetch(`${import.meta.env.VITE_API_URL}/events`).then(r => r.json())
+        ]).then(([artists, tracks, events]) => {
+            setDbData({ artists, tracks, events });
+        });
+    }, []);
+
 
     const handleSend = async () => {
         if (!input.trim()) return;
@@ -16,32 +26,11 @@ function AskDHH() {
         setConvo([...convo, { type: 'user', text: input }]);
         setInput('');
         try {
-            // 1. Fetch all data from Railway
-            const [artistsRes, tracksRes, eventsRes] = await Promise.all([
-                fetch(`${import.meta.env.VITE_API_URL}/artists`),
-                fetch(`${import.meta.env.VITE_API_URL}/tracks`),
-                fetch(`${import.meta.env.VITE_API_URL}/events`)
-            ]);
-            const [artists, tracks, events] = await Promise.all([
-                artistsRes.json(),
-                tracksRes.json(),
-                eventsRes.json()
-            ]);
-
-            // 2. Build context string
-            const context = `
-                    ARTISTS: ${JSON.stringify(artists)}
-                    TRACKS: ${JSON.stringify(tracks)}
-                    EVENTS: ${JSON.stringify(events)}`;
-
-            // 3. Call Claude API
             const response = await fetch('/api/ask', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     system: `You are Ask DHH, an assistant for a Desi Hip Hop website.
-                            CONTEXT DATA:
-                            ${context}
                             Rules:
                             - Answer ONLY using the provided context. Never invent information.
                             - Refuse inappropriate requests politely.
@@ -51,16 +40,13 @@ function AskDHH() {
                             - Plain text only. No markdown or formatting.
                             Respond ONLY with this JSON format, no text outside it:
                             {"message": "your response here", "cards": [{"type": "artist|track|event", "slug": "slug-from-context"}]}`,
-                    messages: [
-                        { role: 'user', content: input }
-                    ]
+                    messages: [{ role: 'user', content: input }]
                 })
             });
 
             const data = await response.json();
             const text = data.choices[0].message.content;
             const parsed = JSON.parse(text);
-            setDbData({ artists, tracks, events });
             setConvo(prev => [...prev, { type: 'assistant', message: parsed.message, cards: parsed.cards }]);
         } catch (err) {
             console.error('AskDHH error:', err);
@@ -130,6 +116,9 @@ function AskDHH() {
                             className="ask-dhh-input"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') handleSend();
+                            }}
                         />
                         <button className="ask-dhh-send" onClick={handleSend}>
                             Search

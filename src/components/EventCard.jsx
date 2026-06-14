@@ -4,7 +4,7 @@ import '../styles/EventCard.css';
 
 function EventCard({slug,title,date,venue,city,artist,image}) {
 
-    const formattedDate = new Date(date).toLocaleDateString('en-US');
+    const formattedDate = new Date(date).toLocaleDateString('en-GB');
 
     return (
             <div className="event-card">

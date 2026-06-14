@@ -1,8 +1,10 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
+import '../styles/EventDetail.css';
 
 function EventDetail() {
-    
+    const navigate = useNavigate();
+
     const { slug } = useParams();
     const { data: eventData, loading, error } = useFetch(`${import.meta.env.VITE_API_URL}/events?slug=${slug}`)
 
@@ -14,13 +16,22 @@ function EventDetail() {
     if (!event) {
         return <p>Event not found.</p>;
     }
+
+    const date = new Date(event.date).toLocaleDateString('en-GB');
     return (
-        <div className="EventDetailScreen">
-            <h1>{event.title}</h1>
-            <p>Date: {event.date}</p>
-            <p>Venue: {event.venue}</p>
-            <p>City: {event.city}</p>
-            <p>Artists: {event.artist}</p>
+        <div>
+            <button onClick={() => navigate(-1)} className="back_link_event">
+                ← Back
+            </button>
+            <div className="EventDetailScreen">
+                <img src={event.image} alt={event.image} className='event_image' />
+                <div className="event_info">
+                    <h1>{event.title}</h1>
+                    <p className="event_date">Date: {date}</p>
+                    <p className="event_venue">Venue: {event.venue}, {event.city}</p>
+                    <p className="event_artist">Artists: {event.artist}</p>
+                </div>
+            </div>
         </div>
     )
 }
