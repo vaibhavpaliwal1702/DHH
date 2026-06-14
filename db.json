@@ -4,19 +4,22 @@
             "id": 1,
             "slug": "krsna",
             "name": "Krsna",
-            "image": "/artists/Krsna.jpg"
+            "image": "/artists/Krsna.jpg",
+            "bio": "Born in Kashmir and raised in London, Krsna built his adult life and career in Delhi. Known as a lyrical genius in the DHH scene, his command over both English and Hindi makes him one of the most versatile MCs in the game. His sharp wordplay and dense rhyme schemes have earned him a reputation as one of the finest technical rappers India has ever produced."
         },
         {
             "id": 2,
             "slug": "seedhemaut",
             "name": "Seedhe Maut",
-            "image": "/artists/SM.jpg"
+            "image": "/artists/SM.jpg",
+            "bio": "Seedhe Maut is a Delhi-based hip hop duo consisting of Encore ABJ (Abhijay Negi, roots in Uttarakhand) and Calm (Siddhant Sharma, from Nainital). The two met at SpitDope Delhi and built one of the most beloved acts in Desi Hip Hop. Their discography — Bayaan, Naayab, the 30-song mixtape Lunch Break — has been an unbroken run of bangers. They now run their own label, DL91."
         },
         {
             "id": 3,
             "slug": "naamsujal",
             "name": "Naam Sujal",
-            "image": "/artists/NaamSujal.jpg"
+            "image": "/artists/NaamSujal.jpg",
+            "bio": "Born and raised in Nagpur, Naam Sujal is a 19-year-old forcing the DHH scene to pay attention. Runner-up on Hustle Season 4, he followed that spotlight with Mamafication — a project packed with standout tracks that proved his placement in the scene is no accident. One of the youngest and hungriest voices in the game right now."
         }
     ],
     "tracks": [

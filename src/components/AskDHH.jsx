@@ -37,13 +37,18 @@ function AskDHH() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    system: `You are Ask DHH, an assistant for a Desi Hip Hop website. 
-                            Answer questions ONLY about the artists, tracks, and events provided in the context.
+                    system: `Answer questions ONLY about the artists, tracks, and events provided in the context.
+                            Give detailed, helpful answers based on the data provided.
                             If the answer is not in the context, say you don't have that information.
                             Never make up information. Refuse inappropriate requests politely.
                             Always respond in this exact JSON format:
-                            {"message": "your response here", "cards": []}
-                            For cards, use: {"type": "artist"|"track"|"event", "slug": "the-slug"}`,
+                            {"message": "your detailed response here", "cards": []}
+                            For cards, include relevant artist/track/event slugs from the context.
+                            Do not use any markdown, LaTeX, or special formatting. Plain text only.
+                            Never mention cards, slugs, or JSON structure in your message text.
+                            The message should be a clean, natural language response only.
+                            Artist names in events may use different formats (e.g. KR$NA = Krsna). 
+                            Match flexibly when looking up event information for artists.`,
                     messages: [
                         { role: 'user', content: `Context:\n${context}\n\nQuestion: ${input}` }
                     ]
@@ -51,7 +56,7 @@ function AskDHH() {
             });
 
             const data = await response.json();
-            const text = data.candidates[0].content.parts[0].text;
+            const text = data.choices[0].message.content;
             const parsed = JSON.parse(text);
 
             setConvo(prev => [...prev, { type: 'assistant', message: parsed.message, cards: parsed.cards }]);
