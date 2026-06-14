@@ -61,7 +61,6 @@ function AskDHH() {
             const text = data.choices[0].message.content;
             const parsed = JSON.parse(text);
             setDbData({ artists, tracks, events });
-            console.log('parsed cards:', parsed.cards);
             setConvo(prev => [...prev, { type: 'assistant', message: parsed.message, cards: parsed.cards }]);
         } catch (err) {
             console.error('AskDHH error:', err);
