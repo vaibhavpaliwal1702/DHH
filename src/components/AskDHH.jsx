@@ -37,8 +37,6 @@ function AskDHH() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    model: 'claude-sonnet-4-6',
-                    max_tokens: 1000,
                     system: `You are Ask DHH, an assistant for a Desi Hip Hop website. 
                             Answer questions ONLY about the artists, tracks, and events provided in the context.
                             If the answer is not in the context, say you don't have that information.
@@ -53,7 +51,7 @@ function AskDHH() {
             });
 
             const data = await response.json();
-            const text = data.content[0].text;
+            const text = data.candidates[0].content.parts[0].text;
             const parsed = JSON.parse(text);
 
             setConvo(prev => [...prev, { type: 'assistant', message: parsed.message, cards: parsed.cards }]);

@@ -1,8 +1,11 @@
-export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
-    }
+import express from 'express';
+import cors from 'cors';
 
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+app.post('/api/ask', async (req, res) => {
     const { messages, system } = req.body;
     const userMessage = messages[0].content;
 
@@ -12,16 +15,13 @@ export default async function handler(req, res) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                contents: [
-                    {
-                        role: 'user',
-                        parts: [{ text: `${system}\n\n${userMessage}` }]
-                    }
-                ]
+                contents: [{ role: 'user', parts: [{ text: `${system}\n\n${userMessage}` }] }]
             })
         }
     );
 
     const data = await response.json();
-    return res.status(200).json(data);
-}
+    res.json(data);
+});
+
+app.listen(3002, () => console.log('Proxy on port 3002'));
