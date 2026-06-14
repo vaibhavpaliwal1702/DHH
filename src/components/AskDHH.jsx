@@ -1,5 +1,6 @@
 import '../styles/AskDhh.css';
 import { useState } from 'react';
+import {Link} from 'react-router-dom';
 
 function AskDHH() {
     const [isOpen, setIsOpen] = useState(false);
@@ -89,30 +90,30 @@ function AskDHH() {
                                                 const artist = dbData.artists.find(a => a.slug === card.slug);
                                                 if (!artist) return null;
                                                 return (
-                                                    <a key={i} href={`/artists/${artist.slug}`} className="ask-dhh-card">
+                                                    <Link key={i} to={`/artists/${artist.slug}`} className="ask-dhh-card">
                                                         <img src={artist.image} alt={artist.name} />
                                                         <span>{artist.name}</span>
-                                                    </a>
+                                                    </Link>
                                                 );
                                             }
                                             if (card.type === 'track') {
                                                 const track = dbData.tracks.find(t => t.slug === card.slug);
                                                 if (!track) return null;
                                                 return (
-                                                    <a key={i} href={`/music`} className="ask-dhh-card">
+                                                    <Link key={i} to={`/music`} className="ask-dhh-card">
                                                         <img src={track.coverImage} alt={track.title} />
                                                         <span>{track.title}</span>
-                                                    </a>
+                                                    </Link>
                                                 );
                                             }
                                             if (card.type === 'event') {
                                                 const event = dbData.events.find(e => e.slug === card.slug);
                                                 if (!event) return null;
                                                 return (
-                                                    <a key={i} href={`/events/${event.slug}`} className="ask-dhh-card">
+                                                    <Link key={i} to={`/events/${event.slug}`} className="ask-dhh-card">
                                                         <span>{event.title}</span>
-                                                        <span>{new Date(event.date).toLocaleDateString('en-US')}</span>
-                                                    </a>
+                                                        <span>. {new Date(event.date).toLocaleDateString('en-US')}</span>
+                                                    </Link>
                                                 );
                                             }
                                             return null;
