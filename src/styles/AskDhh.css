@@ -142,3 +142,34 @@
     font-size: 0.85rem;
     font-style: italic;
 }
+.ask-dhh-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.ask-dhh-card {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #111;
+    border: 1px solid #a855f7;
+    border-radius: 6px;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: #f0f0f0;
+    font-size: 0.8rem;
+    transition: background-color 0.2s;
+}
+
+.ask-dhh-card:hover {
+    background-color: #1f1f1f;
+}
+
+.ask-dhh-card img {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 4px;
+}

@@ -6,6 +6,7 @@ function AskDHH() {
     const [input, setInput] = useState('');
     const [convo, setConvo] = useState([]);
     const [thinking, setThinking] = useState(false);
+    const [dbData, setDbData] = useState({ artists: [], tracks: [], events: [] });
 
 
     const handleSend = async () => {
@@ -37,20 +38,20 @@ function AskDHH() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    system: `Answer questions ONLY about the artists, tracks, and events provided in the context.
-                            Give detailed, helpful answers based on the data provided.
-                            If the answer is not in the context, say you don't have that information.
-                            Never make up information. Refuse inappropriate requests politely.
-                            Always respond in this exact JSON format:
-                            {"message": "your detailed response here", "cards": []}
-                            For cards, include relevant artist/track/event slugs from the context.
-                            Do not use any markdown, LaTeX, or special formatting. Plain text only.
-                            Never mention cards, slugs, or JSON structure in your message text.
-                            The message should be a clean, natural language response only.
-                            Artist names in events may use different formats (e.g. KR$NA = Krsna). 
-                            Match flexibly when looking up event information for artists.`,
+                    system: `You are Ask DHH, an assistant for a Desi Hip Hop website.
+                            CONTEXT DATA:
+                            ${context}
+                            Rules:
+                            - Answer ONLY using the provided context. Never invent information.
+                            - Refuse inappropriate requests politely.
+                            - When asked about a track, focus on track details. Keep artist info brief.
+                            - Use the artist bio field when asked about an artist.
+                            - Match artist names flexibly (e.g. KR$NA = Krsna).
+                            - Plain text only. No markdown or formatting.
+                            Respond ONLY with this JSON format, no text outside it:
+                            {"message": "your response here", "cards": [{"type": "artist|track|event", "slug": "slug-from-context"}]}`,
                     messages: [
-                        { role: 'user', content: `Context:\n${context}\n\nQuestion: ${input}` }
+                        { role: 'user', content: input }
                     ]
                 })
             });
@@ -58,7 +59,8 @@ function AskDHH() {
             const data = await response.json();
             const text = data.choices[0].message.content;
             const parsed = JSON.parse(text);
-
+            setDbData({ artists, tracks, events });
+            console.log('parsed cards:', parsed.cards);
             setConvo(prev => [...prev, { type: 'assistant', message: parsed.message, cards: parsed.cards }]);
         } catch (err) {
             console.error('AskDHH error:', err);
@@ -80,6 +82,43 @@ function AskDHH() {
                         {convo.map((msg, index) => (
                             <div key={index} className={`ask-dhh-msg ask-dhh-msg--${msg.type}`}>
                                 {msg.type === 'user' ? msg.text : msg.message}
+                                {msg.type === 'assistant' && msg.cards && msg.cards.length > 0 && (
+                                    <div className="ask-dhh-cards">
+                                        {msg.cards.map((card, i) => {
+                                            if (card.type === 'artist') {
+                                                const artist = dbData.artists.find(a => a.slug === card.slug);
+                                                if (!artist) return null;
+                                                return (
+                                                    <a key={i} href={`/artists/${artist.slug}`} className="ask-dhh-card">
+                                                        <img src={artist.image} alt={artist.name} />
+                                                        <span>{artist.name}</span>
+                                                    </a>
+                                                );
+                                            }
+                                            if (card.type === 'track') {
+                                                const track = dbData.tracks.find(t => t.slug === card.slug);
+                                                if (!track) return null;
+                                                return (
+                                                    <a key={i} href={`/music`} className="ask-dhh-card">
+                                                        <img src={track.coverImage} alt={track.title} />
+                                                        <span>{track.title}</span>
+                                                    </a>
+                                                );
+                                            }
+                                            if (card.type === 'event') {
+                                                const event = dbData.events.find(e => e.slug === card.slug);
+                                                if (!event) return null;
+                                                return (
+                                                    <a key={i} href={`/events/${event.slug}`} className="ask-dhh-card">
+                                                        <span>{event.title}</span>
+                                                        <span>{new Date(event.date).toLocaleDateString('en-US')}</span>
+                                                    </a>
+                                                );
+                                            }
+                                            return null;
+                                        })}
+                                    </div>
+                                )}
                             </div>
                         ))}
                         {thinking && <p className="ask-dhh-thinking">Thinking...</p>}
