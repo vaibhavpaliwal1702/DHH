@@ -1,0 +1,120 @@
+import express from 'express';
+import cors from 'cors';
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const data = {
+    "artists": [
+        {
+            "id": 1,
+            "slug": "krsna",
+            "name": "Krsna",
+            "image": "/artists/Krsna.jpg",
+            "bio": "Born in Kashmir and raised in London, Krsna built his adult life and career in Delhi. Known as a lyrical genius in the DHH scene, his command over both English and Hindi makes him one of the most versatile MCs in the game. His sharp wordplay and dense rhyme schemes have earned him a reputation as one of the finest technical rappers India has ever produced."
+        },
+        {
+            "id": 2,
+            "slug": "seedhemaut",
+            "name": "Seedhe Maut",
+            "image": "/artists/SM.jpg",
+            "bio": "Seedhe Maut is a Delhi-based hip hop duo consisting of Encore ABJ (Abhijay Negi, roots in Uttarakhand) and Calm (Siddhant Sharma, from Nainital). The two met at SpitDope Delhi and built one of the most beloved acts in Desi Hip Hop. Their discography — Bayaan, Naayab, the 30-song mixtape Lunch Break — has been an unbroken run of bangers. They now run their own label, DL91."
+        },
+        {
+            "id": 3,
+            "slug": "naamsujal",
+            "name": "Naam Sujal",
+            "image": "/artists/NaamSujal.jpg",
+            "bio": "Born and raised in Nagpur, Naam Sujal is a 19-year-old forcing the DHH scene to pay attention. Runner-up on Hustle Season 4, he followed that spotlight with Mamafication — a project packed with standout tracks that proved his placement in the scene is no accident. One of the youngest and hungriest voices in the game right now."
+        }
+    ],
+    "tracks": [
+        {
+            "id": 1,
+            "slug": "BoomShaka",
+            "title": "Boom Shaka",
+            "artist": "Krsna",
+            "type": "Single",
+            "releaseYear": "2026",
+            "coverImage": "/MusicCover/placeHolder.jpg"
+        },
+        {
+            "id": 2,
+            "slug": "TourShit",
+            "title": "Tour Shit",
+            "artist": "Seedhe Maut",
+            "type": "Single",
+            "releaseYear": "2024",
+            "coverImage": "/MusicCover/placeHolder.jpg"
+        },
+        {
+            "id": 3,
+            "slug": "mamafication",
+            "title": "Mamafication",
+            "artist": "Naam Sujal",
+            "type": "Album",
+            "releaseYear": "2026",
+            "coverImage": "/MusicCover/placeHolder.jpg"
+        }
+    ],
+    "events": [
+        {
+            "id": 1,
+            "slug": "desi-hip-hop-delhi-rap-carnival",
+            "title": "Desi Hip Hop Delhi Rap Carnival",
+            "date": "2026-08-14",
+            "venue": "NDMC Convention Centre",
+            "city": "Delhi",
+            "artist": "KR$NA, Seedhe Maut",
+            "image": "/EventCover/placeHolder.jpg"
+        },
+        {
+            "id": 2,
+            "slug": "desi-hip-hop-delhi-beat-fest",
+            "title": "Desi Hip Hop Delhi Beat Fest",
+            "date": "2026-09-05",
+            "venue": "Pragati Maidan",
+            "city": "Delhi",
+            "artist": "Raftaar, Naam Sujal",
+            "image": "/EventCover/placeHolder.jpg"
+        },
+        {
+            "id": 3,
+            "slug": "desi-hip-hop-delhi-cypher-showcase",
+            "title": "Desi Hip Hop Delhi Street Cypher",
+            "date": "2026-10-11",
+            "venue": "India Habitat Centre",
+            "city": "Delhi",
+            "artist": "Arpit Bala, Chaar Diwari",
+            "image": "/EventCover/placeHolder.jpg"
+        }
+    ]
+}
+
+app.get('/artists',(req,res) => {
+    const { slug } = req.query;
+    if (slug) {
+        return res.json(data.artists.filter(a => a.slug === slug));
+    }
+    res.json(data.artists);
+});
+
+app.get('/tracks',(req,res) => {
+    const { slug } = req.query;
+    if (slug) {
+        const filtered = data.tracks.filter(t => t.slug === slug);
+        return res.json(filtered);
+    }
+    res.json(data.tracks);
+});
+
+app.get('/events',(req,res) => {
+    const { slug } = req.query;
+    if (slug) {
+        const filtered = data.events.filter(e => e.slug === slug);
+        return res.json(filtered);
+    }
+    res.json(data.events);
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));

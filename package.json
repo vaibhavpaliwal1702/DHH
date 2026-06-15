@@ -32,5 +32,18 @@
   },
   "engines": {
     "node": ">=20.0.0"
-  }
+  },
+  "description": "<<<<<<< HEAD\r # React + Vite",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaibhavpaliwal1702/DHH.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vaibhavpaliwal1702/DHH/issues"
+  },
+  "homepage": "https://github.com/vaibhavpaliwal1702/DHH#readme"
 }
