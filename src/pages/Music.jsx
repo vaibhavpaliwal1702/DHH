@@ -15,7 +15,7 @@ function Music() {
     if (error) return <p>Error: {error}</p>
     
     const filteredMusic = musicData.filter(a =>
-        a.title.toLowerCase().includes(searchTerm.toLowerCase())
+        a.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const filteredTracks = activeFilter === 'All' ? filteredMusic : filteredMusic.filter((t) => t.type === activeFilter)
@@ -37,12 +37,12 @@ function Music() {
                 {filteredTracks.length > 0 ? (
                     <ul className='music_item'>
                         {filteredTracks.map((track) =>
-                            <li key={track.id}>
+                            <li key={track.trackid}>
                                 <div className="music_list">
-                                    <img src={track.coverImage} alt={track.title} className="cover_image"></img>
-                                    <p className="track-title">{track.title}</p>
+                                    <img src={track.coverimage} alt={track.name} className="cover_image"></img>
+                                    <p className="track-title">{track.name}</p>
                                     <p className="track-artist">{track.artist}</p>
-                                    <p className="track-meta">{track.type} | {track.releaseYear}</p>
+                                    <p className="track-meta">{track.type} | {track.release_date}</p>
                                 </div>
                             </li>)}
                     </ul>

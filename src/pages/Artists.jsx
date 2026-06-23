@@ -26,7 +26,7 @@ function Artists() {
                 <div className='Art-features'>
                     {filteredArtists.map((artist) => (
                         <ArtistCard
-                            key={artist.id}
+                            key={artist.artistid}
                             artistImg={artist.image}
                             artistName={artist.name}
                             slug={artist.slug}

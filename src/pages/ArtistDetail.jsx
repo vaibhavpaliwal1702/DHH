@@ -27,7 +27,7 @@ function ArtistDetail() {
                 <img src={artist.image} alt={artist.name} className='artist_image' />
                 <div className="artist_info">
                     <p className='artist_name'>{artist.name}</p>
-                    <p className="artist_bio">{artist.bio}</p>
+                    <p className="artist_bio">{artist.description}</p>
                 </div>
             </div>
         </div>

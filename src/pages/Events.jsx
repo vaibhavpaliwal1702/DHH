@@ -13,10 +13,10 @@ function Events() {
     if (error) return <p>Error: {error}</p>
 
     const sortedEvents = [...eventData].sort(
-        (a, b) => new Date(a.date) - new Date(b.date)
+        (a, b) => new Date(a.eventdate) - new Date(b.eventdate)
     );
     const filteredEvents = sortedEvents.filter(a =>
-        a.title.toLowerCase().includes(searchTerm.toLowerCase())
+        a.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -29,10 +29,10 @@ function Events() {
                 {filteredEvents.length > 0 ? (
                     filteredEvents.map((event) => (
                         <EventCard
-                            key={event.id}
+                            key={event.eventid}
                             slug={event.slug}
-                            title={event.title}
-                            date={event.date}
+                            title={event.name}
+                            date={event.eventdate}
                             venue={event.venue}
                             city={event.city}
                             artist={event.artist}

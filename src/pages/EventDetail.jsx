@@ -17,7 +17,7 @@ function EventDetail() {
         return <p>Event not found.</p>;
     }
 
-    const date = new Date(event.date).toLocaleDateString('en-GB');
+    const date = new Date(event.eventdate).toLocaleDateString('en-GB');
     return (
         <div>
             <button onClick={() => navigate(-1)} className="back_link_event">
@@ -26,7 +26,7 @@ function EventDetail() {
             <div className="EventDetailScreen">
                 <img src={event.image} alt={event.image} className='event_image' />
                 <div className="event_info">
-                    <h1>{event.title}</h1>
+                    <h1>{event.name}</h1>
                     <p className="event_date">Date: {date}</p>
                     <p className="event_venue">Venue: {event.venue}, {event.city}</p>
                     <p className="event_artist">Artists: {event.artist}</p>
