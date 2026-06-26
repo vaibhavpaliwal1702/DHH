@@ -7,7 +7,6 @@ function EventDetail() {
 
     const { slug } = useParams();
     const { data: eventData, loading, error } = useFetch(`${import.meta.env.VITE_API_URL}/events?slug=${slug}`)
-
     const event = eventData[0];
 
     if (loading) return <p>Loading...</p>
@@ -29,7 +28,7 @@ function EventDetail() {
                     <h1>{event.name}</h1>
                     <p className="event_date">Date: {date}</p>
                     <p className="event_venue">Venue: {event.venue}, {event.city}</p>
-                    <p className="event_artist">Artists: {event.artist}</p>
+                    <p className="event_artist">Artists: {event.artist_name.join(", ")}</p>
                 </div>
             </div>
         </div>

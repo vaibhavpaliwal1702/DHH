@@ -25,7 +25,7 @@ function Home() {
                     <p>No Artist Available at the moment.</p>)}
                 {artistData.length > 0 && (artistData.map((art) => (
                     <ArtistCard
-                        key={art.id}
+                        key={art.artistid}
                         artistImg={art.image}
                         artistName={art.name}
                         slug={art.slug}

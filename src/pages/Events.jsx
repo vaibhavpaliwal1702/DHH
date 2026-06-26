@@ -35,7 +35,7 @@ function Events() {
                             date={event.eventdate}
                             venue={event.venue}
                             city={event.city}
-                            artist={event.artist}
+                            artist={event.artist_name.join(", ")}
                             image={event.image}
                         />
                     ))
