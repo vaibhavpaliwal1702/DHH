@@ -96,8 +96,8 @@ function AskDHH() {
                                                 if (!event) return null;
                                                 return (
                                                     <Link key={i} to={`/events/${event.slug}`} className="ask-dhh-card">
-                                                        <span>{event.title}</span>
-                                                        <span>. {new Date(event.date).toLocaleDateString('en-US')}</span>
+                                                        <span>{event.name}</span>
+                                                        <span>. {new Date(event.eventdate).toLocaleDateString('en-US')}</span>
                                                     </Link>
                                                 );
                                             }
