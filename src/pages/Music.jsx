@@ -41,7 +41,7 @@ function Music() {
                                 <div className="music_list">
                                     <img src={track.coverimage} alt={track.name} className="cover_image"></img>
                                     <p className="track-title">{track.name}</p>
-                                    <p className="track-artist">{track.artist}</p>
+                                    <p className="track-artist">{track.artist_name}</p>
                                     <p className="track-meta">{track.type} | {track.release_date}</p>
                                 </div>
                             </li>)}

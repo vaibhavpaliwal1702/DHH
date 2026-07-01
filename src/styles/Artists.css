@@ -1,22 +1,31 @@
 .Art-features{
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     padding: 2rem;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-items: stretch;
+    align-items: stretch;
+    width: calc(100% - 4rem);
+    margin: 0 2rem 0 2rem;
 }
 
 .search-bar{
-    width: 50vw;
+    width: min(50vw, 600px);
+    max-width: calc(100% - 4rem);
     height: 40px;
     padding: 0.5rem;
-    margin-top: 1rem;
-    margin-left: 2rem;
+    margin: 1rem 2rem;
     font-size: 1rem;
     color: white;
     background-color: transparent;
     border: 1px solid #a855f7;
     transition: transform 0.3s ease;
+}
+
+@media (max-width: 640px) {
+    .search-bar{
+        margin: 1rem auto;
+    }
 }
 
 .search-bar:focus{

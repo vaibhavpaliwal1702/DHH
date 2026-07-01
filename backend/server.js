@@ -32,12 +32,10 @@ app.get('/artists', async (req, res) => {
 app.get('/tracks', async (req, res) => {
     const { slug } = req.query;
     try {
-        let result;
-        if (slug) {
-            result = await pool.query('SELECT * FROM tracks WHERE slug = $1', [slug]);
-        } else {
-            result = await pool.query('SELECT * FROM tracks');
-        }
+        const baseQuery = `SELECT TR.trackid, TR.name, TR.release_date, TR.description, TR.coverimage, TR.slug, TR.type, ART.name AS artist_name FROM tracks TR JOIN artists ART ON ART.artistid = TR.artistid`;
+        const query = slug ? `${baseQuery} WHERE TR.slug = $1` : baseQuery;
+        const params = slug ? [slug] : [];
+        const result = await pool.query(query, params);
         res.json(result.rows);
     } catch (error) {
         console.error('Database query error:', error);
