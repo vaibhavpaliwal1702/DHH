@@ -21,7 +21,8 @@
     background-color: rgba(0, 0, 0, 0.55);
 }
 
-.hero h1, .hero p {
+.hero h1,
+.hero p {
     position: relative;
     z-index: 1;
     color: #ffffff;
@@ -32,23 +33,25 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     padding: 2rem;
+    align-items: start;
+
 }
 
-/* .features .artist-card {
-    width: 100%;
+.features .artist-card {
+    width: 550px;
     margin: 0;
     padding: 0.75rem;
     align-items: center;
-} */
+}
 
 .features .artist-card .artist-img {
     width: 500px;
     height: 350px;
-    object-fit: fill;
-    object-position: inherit;
+    object-fit: cover;
+    object-position: center;
 }
 
-.featured-header{
+.featured-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -56,7 +59,7 @@
     margin: 0 2rem;
 }
 
-.see-more-button{
+.see-more-button {
     color: #9333ea;
     background: transparent;
     border: none;
@@ -67,25 +70,25 @@
     transition: transform 0.2s ease, text-decoration-color 0.2s ease;
 }
 
-.see-more-button:hover{
+.see-more-button:hover {
     text-decoration: underline;
     transform: scale(1.03);
 }
 
-.hero-title{
+.hero-title {
     font-size: 3rem;
     font-weight: bold;
     text-align: center;
     margin-bottom: 1rem;
 }
 
-.hero-description{
+.hero-description {
     font-size: 1rem;
     opacity: 0.8;
     text-align: center;
 }
 
-.featured-artists{
+.featured-artists {
     text-align: left;
     text-transform: uppercase;
     letter-spacing: 0.1em;

@@ -12,24 +12,25 @@
 
 .artist-img {
     width: 100%;
-    height: 280px;
+    height: 350px;
     object-fit: cover;
-    object-position: center top;
+    object-position: center;
     display: block;
+    padding: 1rem;
 }
 
 @media (max-width: 640px) {
-    .artist-card{
+    .artist-card {
         max-width: 100%;
     }
 }
 
-.artist-card:hover{
+.artist-card:hover {
     transform: scale(1.05);
     cursor: pointer;
 }
 
-.artist-name{
+.artist-name {
     text-align: center;
     color: white;
     font-size: 1.1rem;
@@ -37,12 +38,12 @@
     margin-top: 0.5rem;
 }
 
-.artist_btn:hover{
+.artist_btn:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
 
-.artist_btn{
+.artist_btn {
     width: 100px;
     padding: 5px;
     background-color: #a855f7;
@@ -54,7 +55,7 @@
     transition: transform 0.3s ease;
 }
 
-.btn-following{
+.btn-following {
     color: #a855f7;
     border: 1px solid #a855f7;
     background-color: transparent;
@@ -63,4 +64,6 @@
 .artist-card a {
     text-decoration: none;
     color: inherit;
+    width: 100%;
+    display: block;
 }
