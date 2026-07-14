@@ -9,25 +9,28 @@ import NotFound from './pages/NotFound.jsx';
 import AskDHH from "./components/AskDHH";
 import { FollowProvider } from "./context/FollowContext";
 import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
     <div>
-      <FollowProvider>
-        <Navbar />
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/artists" element={<Artists />} />
-            <Route path="/music" element={<Music />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/artists/:slug" element={<ArtistDetail />} />
-            <Route path="/events/:slug" element={<EventDetail />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-        <AskDHH />
-      </FollowProvider>
+      <AuthProvider>
+        <FollowProvider>
+          <Navbar />
+          <div className="content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/artists" element={<Artists />} />
+              <Route path="/music" element={<Music />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/artists/:slug" element={<ArtistDetail />} />
+              <Route path="/events/:slug" element={<EventDetail />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+          <AskDHH />
+        </FollowProvider>
+      </AuthProvider>
     </div>
   );
 }
