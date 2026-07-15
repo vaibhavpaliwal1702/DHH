@@ -13,6 +13,11 @@ function AuthModal({ onClose }) {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
+    const handleModeToggle = () => {
+        setIsLogin(!isLogin);
+        setError('');
+    };
+
     const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
     const validatePassword = (password) => {
@@ -72,46 +77,79 @@ function AuthModal({ onClose }) {
 
     return (
         <div className="auth-overlay" onClick={onClose}>
-            <div className="auth-modal" onClick={e => e.stopPropagation()}>
+            <div
+                className={`auth-modal ${isLogin ? 'auth-modal--login' : 'auth-modal--signup'}`}
+                onClick={e => e.stopPropagation()}
+            >
                 <button className="auth-close" onClick={onClose}>×</button>
-                <h2 className="auth-title">{isLogin ? 'Log In' : 'Sign Up'}</h2>
 
-                {!isLogin && (
-                    <input
-                        className="auth-input"
-                        type="text"
-                        name="username"
-                        placeholder="Username"
-                        value={form.username}
-                        onChange={handleChange}
-                    />
-                )}
-                <input
-                    className="auth-input"
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={form.email}
-                    onChange={handleChange}
-                />
-                <input
-                    className="auth-input"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={form.password}
-                    onChange={handleChange}
-                />
+                <div className="auth-card-shell">
+                    <div className="auth-card">
+                        <div className={`auth-face auth-face--login ${isLogin ? 'auth-face--active' : ''}`}>
+                            <h2 className="auth-title">Log In</h2>
+                            <input
+                                className="auth-input"
+                                type="email"
+                                name="email"
+                                placeholder="Email"
+                                value={form.email}
+                                onChange={handleChange}
+                            />
+                            <input
+                                className="auth-input"
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                value={form.password}
+                                onChange={handleChange}
+                            />
 
-                {error && <p className="auth-error">{error}</p>}
+                            {error && <p className="auth-error">{error}</p>}
 
-                <button className="auth-submit" onClick={handleSubmit} disabled={loading}>
-                    {loading ? 'Please wait...' : isLogin ? 'Log In' : 'Sign Up'}
-                </button>
+                            <button className="auth-submit" onClick={handleSubmit} disabled={loading}>
+                                {loading ? 'Please wait...' : 'Log In'}
+                            </button>
+                        </div>
+
+                        <div className={`auth-face auth-face--signup ${!isLogin ? 'auth-face--active' : ''}`}>
+                            <h2 className="auth-title">Sign Up</h2>
+                            <input
+                                className="auth-input"
+                                type="text"
+                                name="username"
+                                placeholder="Username"
+                                value={form.username}
+                                onChange={handleChange}
+                            />
+                            <input
+                                className="auth-input"
+                                type="email"
+                                name="email"
+                                placeholder="Email"
+                                value={form.email}
+                                onChange={handleChange}
+                            />
+                            <input
+                                className="auth-input"
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                value={form.password}
+                                onChange={handleChange}
+                            />
+
+                            {error && <p className="auth-error">{error}</p>}
+
+                            <button className="auth-submit" onClick={handleSubmit} disabled={loading}>
+                                {loading ? 'Please wait...' : 'Sign Up'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 <p className="auth-toggle">
                     {isLogin ? "Don't have an account?" : 'Already have an account?'}
-                    <span onClick={() => { setIsLogin(!isLogin); setError(''); }}>
+                    <span onClick={handleModeToggle}>
                         {isLogin ? ' Sign Up' : ' Log In'}
                     </span>
                 </p>

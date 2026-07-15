@@ -155,5 +155,44 @@ app.get('/auth/me', authenticate, async (req, res) => {
     }
 });
 
+app.get('/follows', authenticate, async (req, res) => {
+    try {
+        const result = await pool.query(
+            `SELECT art.* FROM artists art 
+            JOIN userfollows uf ON art.artistid = uf.artistid 
+            WHERE uf.userid = $1`,
+            [req.userId]
+        );
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Follows fetch error:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.post('/follows/:artistId', authenticate, async (req, res) => {
+    try {
+        await pool.query(
+            'INSERT INTO userfollows (userid, artistid) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+            [req.userId, req.params.artistId]
+        );
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.delete('/follows/:artistId', authenticate, async (req, res) => {
+    try {
+        await pool.query(
+            'DELETE FROM userfollows WHERE userid = $1 AND artistid = $2',
+            [req.userId, req.params.artistId]
+        );
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

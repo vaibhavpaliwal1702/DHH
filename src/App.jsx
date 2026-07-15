@@ -10,6 +10,7 @@ import AskDHH from "./components/AskDHH";
 import { FollowProvider } from "./context/FollowContext";
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import GlobalAuthModal from './components/GlobalAuthModal';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <AuthProvider>
         <FollowProvider>
           <Navbar />
+          <GlobalAuthModal />
           <div className="content">
             <Routes>
               <Route path="/" element={<Home />} />

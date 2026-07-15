@@ -5,6 +5,9 @@ export const AuthContext = createContext();
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [authModalOpen, setAuthModalOpen] = useState(false);
+    const openAuthModal = () => setAuthModalOpen(true);
+    const closeAuthModal = () => setAuthModalOpen(false);
 
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
@@ -30,7 +33,10 @@ export function AuthProvider({ children }) {
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, logout }}>
+        <AuthContext.Provider value={{
+            user, loading, login, logout,
+            authModalOpen, openAuthModal, closeAuthModal
+        }}>
             {children}
         </AuthContext.Provider>
     );
