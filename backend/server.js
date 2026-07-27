@@ -14,7 +14,7 @@ pg.types.setTypeParser(1082, val => val);
 
 const app = express();
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://dhh-teal.vercel.app'],
     credentials: true
 }));
 app.use(express.json());
