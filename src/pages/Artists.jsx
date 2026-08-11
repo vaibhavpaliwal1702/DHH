@@ -30,6 +30,7 @@ function Artists() {
                             artistImg={artist.image}
                             artistName={artist.name}
                             slug={artist.slug}
+                            artistId={art.artistid}
                         />
                     ))
                     }

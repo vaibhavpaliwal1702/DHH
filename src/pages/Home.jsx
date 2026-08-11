@@ -66,6 +66,7 @@ function Home() {
                             artistImg={art.image}
                             artistName={art.name}
                             slug={art.slug}
+                            artistId={art.artistid}
                         />
                     ))
                 )}
