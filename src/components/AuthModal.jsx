@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { validatePasswordForSubmit } from '../utils/authValidation';
 import '../styles/AuthModal.css';
 
 function AuthModal({ onClose }) {
@@ -20,15 +21,6 @@ function AuthModal({ onClose }) {
 
     const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-    const validatePassword = (password) => {
-        if (password.includes(' ') || password.includes('\t')) return 'Password cannot contain spaces or tabs.';
-        if (!/[A-Z]/.test(password)) return 'Password must contain at least one uppercase letter.';
-        if (!/[a-z]/.test(password)) return 'Password must contain at least one lowercase letter.';
-        if (!/[0-9]/.test(password)) return 'Password must contain at least one number.';
-        if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) return 'Password must contain at least one special character.';
-        return null;
-    };
-
     const handleSubmit = async () => {
         setError('');
         if (!form.email || !form.password) {
@@ -39,13 +31,14 @@ function AuthModal({ onClose }) {
             setError('Enter a valid email address.');
             return;
         }
-        const passwordError = validatePassword(form.password);
-        if (passwordError) {
-            setError(passwordError);
-            return;
-        }
         if (!isLogin && !form.username) {
             setError('Username is required.');
+            return;
+        }
+
+        const passwordError = validatePasswordForSubmit(form.password, isLogin);
+        if (passwordError) {
+            setError(passwordError);
             return;
         }
         setLoading(true);

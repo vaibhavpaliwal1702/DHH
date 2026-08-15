@@ -7,6 +7,7 @@ import ArtistDetail from './pages/ArtistDetail.jsx';
 import EventDetail from './pages/EventDetail.jsx';
 import NotFound from './pages/NotFound.jsx';
 import AskDHH from "./components/AskDHH";
+import Profile from "./pages/Profile";
 import { FollowProvider } from "./context/FollowContext";
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
@@ -27,6 +28,7 @@ function App() {
               <Route path="/events" element={<Events />} />
               <Route path="/artists/:slug" element={<ArtistDetail />} />
               <Route path="/events/:slug" element={<EventDetail />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
