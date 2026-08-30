@@ -18,6 +18,55 @@ app.post('/api/ask', async (req, res) => {
     const { messages, system } = req.body;
     const userQuery = messages[0].content;
 
+    const tools = [
+        {
+            "type": "function",
+            "function": {
+                "name": "get_upcoming_events",
+                "description": "Returns a list of upcoming events sorted by date, starting from today.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": []
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "search_artists_semantic",
+                "description": "Returns a list of artists based on semantic search.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                            "type": "string",
+                            "description": "The search query describing what the user wants to know about an artist."
+                        }
+                    },
+                    "required": ["query"]
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "get_event_by_slug",
+                "description": "Returns information about a specific event by its slug.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "slug": {
+                            "type": "string",
+                            "description": "The slug of the event to retrieve."
+                        }
+                    },
+                    "required": ["slug"]
+                }
+            }
+        }
+    ]
+
     // 1. Embed the query
     const embedRes = await fetch('https://api.jina.ai/v1/embeddings', {
         method: 'POST',
@@ -58,7 +107,8 @@ app.post('/api/ask', async (req, res) => {
             messages: [
                 { role: 'system', content: `${system}\n\nCONTEXT:\n${context}` },
                 { role: 'user', content: userQuery }
-            ]
+            ],
+            tools: tools
         })
     });
 
