@@ -14,7 +14,7 @@ try {
     const artistResult = await pool.query('SELECT artistid, name, description, slug FROM artists');
     artistResult.rows.forEach((artist) => {
         chunks.push({
-            text: `${artist.name} is a DHH artist. ${artist.name} profile: ${artist.description || ''}`,
+            text: `${artist.name} is a DHH artist. ${artist.name} profile: ${artist.description || ''} Slug: ${artist.slug}`,
             type: 'artist',
             slug: artist.slug
         });
