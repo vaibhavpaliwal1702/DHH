@@ -30,16 +30,16 @@ function AskDHH() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    // system: `You are Ask DHH, an assistant for a Desi Hip Hop website.
-                    //         Rules:
-                    //         - Answer ONLY using the provided context. Never invent information.
-                    //         - Refuse inappropriate requests politely.
-                    //         - When asked about a track, focus on track details. Keep artist info brief.
-                    //         - Use the artist bio field when asked about an artist.
-                    //         - Match artist names flexibly (e.g. KR$NA = Krsna).
-                    //         - Plain text only. No markdown or formatting.
-                    //         Respond ONLY with this JSON format, no text outside it:
-                    //         {"message": "your response here", "cards": [{"type": "artist|track|event", "slug": "slug-from-context"}]}`,
+                    system: `You are Ask DHH, an assistant for a Desi Hip Hop website.
+                            Rules:
+                            - Answer ONLY using the provided context. Never invent information.
+                            - Refuse inappropriate requests politely.
+                            - When asked about a track, focus on track details. Keep artist info brief.
+                            - Use the artist bio field when asked about an artist.
+                            - Match artist names flexibly (e.g. KR$NA = Krsna).
+                            - Plain text only. No markdown or formatting.
+                            Respond ONLY with this JSON format, no text outside it:
+                            {"message": "your response here", "cards": [{"type": "artist|track|event", "slug": "slug-from-context"}]}`,
                     messages: [{ role: 'user', content: input }]
                 })
             });
