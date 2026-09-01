@@ -103,17 +103,26 @@ app.post('/api/ask', async (req, res) => {
             'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
         },
         body: JSON.stringify({
-            model: 'llama-3.3-70b-versatile',
+            model: 'openai/gpt-oss-120b',
             messages: [
                 { role: 'system', content: `${system}\n\nCONTEXT:\n${context}` },
                 { role: 'user', content: userQuery }
             ],
-            tools: tools
+            tools: tools,
+            tool_choice: 'auto'
         })
     });
-
     const data = await response.json();
+    console.log(JSON.stringify(data, null, 2));
     return res.status(200).json(data);
 
 });
-app.listen(3002, () => console.log('Proxy on port 3002'));
+const PORT = 3002;
+const server = app.listen(PORT, () => console.log(`Proxy on port ${PORT}`));
+server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.error(`Port ${PORT} is already in use — another process (maybe a previous run of this proxy) is still listening. Stop it first, e.g.: netstat -ano | findstr :${PORT}`);
+        process.exit(1);
+    }
+    throw err;
+});
