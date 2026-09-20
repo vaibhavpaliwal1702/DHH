@@ -2,6 +2,7 @@ import '../styles/ArtistCard.css'
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { FollowContext } from '../context/FollowContext';
+import ArtistImage from './ArtistImage';
 
 function ArtistCard({ artistImg, artistName, slug, artistId }) {
     const { toggleFollow, followedArtist } = useContext(FollowContext);
@@ -10,7 +11,7 @@ function ArtistCard({ artistImg, artistName, slug, artistId }) {
     return (
         <div className="artist-card">
             <Link to={`/artists/${slug}`}>
-                <img src={artistImg} alt={artistName} className="artist-img" />
+                <ArtistImage src={artistImg} name={artistName} className="artist-img" />
                 <p className="artist-name">{artistName}</p>
             </Link>
             <button className={btnClass} type='button' onClick={() => toggleFollow(slug, artistId)}>{isFollowed ? "Following" : "Follow"}</button>

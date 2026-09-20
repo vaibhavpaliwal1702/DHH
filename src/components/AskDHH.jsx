@@ -1,6 +1,7 @@
 import '../styles/AskDhh.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import ArtistImage from './ArtistImage';
 
 function AskDHH() {
     const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +26,11 @@ function AskDHH() {
         setThinking(true);
         setConvo([...convo, { type: 'user', text: input }]);
         setInput('');
+        const history = convo.map(turn =>
+            turn.type === 'user'
+                ? { role: 'user', content: turn.text }
+                : { role: 'assistant', content: JSON.stringify({ message: turn.message, cards: turn.cards }) }
+        );
         try {
             const response = await fetch('/api/ask', {
                 method: 'POST',
@@ -40,7 +46,7 @@ function AskDHH() {
                             - Plain text only. No markdown or formatting.
                             Respond ONLY with this JSON format, no text outside it:
                             {"message": "your response here", "cards": [{"type": "artist|track|event", "slug": "slug-from-context"}]}`,
-                    messages: [{ role: 'user', content: input }]
+                    messages: [...history, { role: 'user', content: input }]
                 })
             });
 
@@ -76,7 +82,7 @@ function AskDHH() {
                                                 if (!artist) return null;
                                                 return (
                                                     <Link key={i} to={`/artists/${artist.slug}`} className="ask-dhh-card">
-                                                        <img src={artist.image} alt={artist.name} />
+                                                        <ArtistImage src={artist.image} name={artist.name} className="ask-dhh-card-thumb" />
                                                         <span>{artist.name}</span>
                                                     </Link>
                                                 );

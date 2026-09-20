@@ -1,5 +1,6 @@
 import "../styles/Home.css";
 import ArtistCard from "../components/ArtistCard";
+import ArtistCardSkeleton from "../components/ArtistCardSkeleton";
 import useFetch from '../hooks/useFetch';
 import { Link } from 'react-router-dom';
 import { useMemo } from 'react';
@@ -40,7 +41,6 @@ function Home() {
         [artistData]
     );
 
-    if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
 
     return (
@@ -56,8 +56,10 @@ function Home() {
                     <Link to="/artists" className="see-more-button">See more →</Link>
                 </div>
             </div>
-            <div className="features">
-                {featuredArtists.length === 0 ? (
+            <div className="features" aria-busy={loading}>
+                {loading ? (
+                    Array.from({ length: 3 }, (_, i) => <ArtistCardSkeleton key={i} />)
+                ) : featuredArtists.length === 0 ? (
                     <p>No Artist Available at the moment.</p>
                 ) : (
                     featuredArtists.map((art) => (

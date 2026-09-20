@@ -1,6 +1,7 @@
 import { useAuth } from '../context/AuthContext';
 import { useEffect, useState } from 'react';
 import ArtistCard from '../components/ArtistCard';
+import ArtistCardSkeleton from '../components/ArtistCardSkeleton';
 import '../styles/Profile.css';
 
 function Profile() {
@@ -21,8 +22,6 @@ function Profile() {
     }, [user]);
 
     if (!user) return <p>Please log in to view your profile.</p>;
-    if (loading) return <p>Loading...</p>;
-
     return (
         <div className="profile-page">
             <div className="profile-header">
@@ -34,7 +33,11 @@ function Profile() {
 
             <div className="profile-section">
                 <h2>Followed Artists</h2>
-                {followedArtists.length === 0 ? (
+                {loading ? (
+                    <div className="profile-artist-grid" aria-busy="true" aria-label="Loading followed artists">
+                        {Array.from({ length: 3 }, (_, i) => <ArtistCardSkeleton key={i} />)}
+                    </div>
+                ) : followedArtists.length === 0 ? (
                     <p>You haven't followed any artists yet.</p>
                 ) : (
                     <div className="profile-artist-grid">
