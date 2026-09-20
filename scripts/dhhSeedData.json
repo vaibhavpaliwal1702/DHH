@@ -1,0 +1,44 @@
+{
+  "_note": "DRAFT for review. Bios are deliberately minimal. Track years are from memory; entries with verify:true are the ones I'm least sure of. Event lineups are illustrative demo data, not real bookings. Images use the placeholder path so the app's generated placeholder is shown.",
+  "artists": [
+    { "slug": "divine", "name": "Divine", "description": "Mumbai rapper Vivian Fernandes, one of the most recognisable voices of Indian street rap and the founder of Gully Gang Entertainment. His story and his work with Naezy helped inspire the film Gully Boy." },
+    { "slug": "naezy", "name": "Naezy", "description": "Mumbai rapper Naved Shaikh, a pioneer of Mumbai street rap whose story, together with Divine's, inspired the film Gully Boy." },
+    { "slug": "emiway-bantai", "name": "Emiway Bantai", "description": "Mumbai rapper who runs the independent label Bantai Records and built a huge following through Hindi rap releases put out on his own terms." },
+    { "slug": "mc-stan", "name": "MC Stan", "description": "Pune rapper Altaf Shaikh, known for hard-hitting Hindi rap and a loyal fanbase. He won Bigg Boss 16 in 2023." },
+    { "slug": "badshah", "name": "Badshah", "description": "Delhi-based rapper, singer and producer Aditya Prateek Singh Sisodia, who blends Hindi and Punjabi rap with mainstream pop." },
+    { "slug": "yo-yo-honey-singh", "name": "Yo Yo Honey Singh", "description": "Rapper and producer who brought Punjabi-Hindi hip hop into the Bollywood mainstream in the early 2010s." },
+    { "slug": "prabh-deep", "name": "Prabh Deep", "description": "Delhi rapper and songwriter known for raw, socially aware storytelling. His debut album Class-Sikh came out in 2017." },
+    { "slug": "brodha-v", "name": "Brodha V", "description": "Bengaluru-based rapper and producer known for blending hip hop with South Indian musical influences." },
+    { "slug": "king", "name": "King", "description": "Indian singer-rapper whose melodic hip-hop and pop crossover tracks found a huge audience online." },
+    { "slug": "hanumankind", "name": "Hanumankind", "description": "Rapper Sooraj Cherukat, born in Kerala and based in Houston, whose track Big Dawgs went viral worldwide in 2024." },
+    { "slug": "sofia-ashraf", "name": "Sofia Ashraf", "description": "Chennai rapper and activist whose viral protest track Kodaikanal Won't (2015) called out mercury pollution." },
+    { "slug": "hard-kaur", "name": "Hard Kaur", "description": "UK-born rapper Taran Kaur Dhillon, known as one of the early female hip-hop artists in India." },
+    { "slug": "baba-sehgal", "name": "Baba Sehgal", "description": "A pioneer of Indian pop-rap in the 1990s who helped introduce rap to a mainstream Hindi audience." },
+    { "slug": "kaam-bhaari", "name": "Kaam Bhaari", "description": "Mumbai rapper associated with the Gully Gang crew." },
+    { "slug": "swadesi", "name": "Swadesi", "description": "Mumbai-based hip-hop collective known for socially conscious, street-rooted music." },
+    { "slug": "mc-tod-fod", "name": "MC Tod Fod", "description": "Mumbai rapper and member of the Swadesi collective." },
+    { "slug": "vedan", "name": "Vedan", "description": "Kerala rapper Hirandas Murali, known for Malayalam rap with sharp social and political themes." },
+    { "slug": "arivu", "name": "Arivu", "description": "Tamil singer-rapper and songwriter Arivarasu Kalainesan, who co-created and performed Enjoy Enjaami (2021) with Dhee." }
+  ],
+  "tracks": [
+    { "slug": "mere-gully-mein", "name": "Mere Gully Mein", "artist": "divine", "type": "Single", "year": 2015, "description": "With Naezy.", "verify": true },
+    { "slug": "kohinoor", "name": "Kohinoor", "artist": "divine", "type": "Album", "year": 2019, "verify": true },
+    { "slug": "machayenge", "name": "Machayenge", "artist": "emiway-bantai", "type": "Single", "year": 2019, "verify": true },
+    { "slug": "insaan", "name": "Insaan", "artist": "mc-stan", "type": "Album", "year": 2022, "verify": true },
+    { "slug": "dj-waley-babu", "name": "DJ Waley Babu", "artist": "badshah", "type": "Single", "year": 2015 },
+    { "slug": "blue-eyes", "name": "Blue Eyes", "artist": "yo-yo-honey-singh", "type": "Single", "year": 2013 },
+    { "slug": "class-sikh", "name": "Class-Sikh", "artist": "prabh-deep", "type": "Album", "year": 2017 },
+    { "slug": "aigiri-nandini", "name": "Aigiri Nandini", "artist": "brodha-v", "type": "Single", "year": 2015, "verify": true },
+    { "slug": "tu-aake-dekhle", "name": "Tu Aake Dekhle", "artist": "king", "type": "Single", "year": 2019, "verify": true },
+    { "slug": "big-dawgs", "name": "Big Dawgs", "artist": "hanumankind", "type": "Single", "year": 2024 },
+    { "slug": "kodaikanal-wont", "name": "Kodaikanal Won't", "artist": "sofia-ashraf", "type": "Single", "year": 2015 },
+    { "slug": "thanda-thanda-paani", "name": "Thanda Thanda Paani", "artist": "baba-sehgal", "type": "Single", "year": 1992, "verify": true },
+    { "slug": "voice-of-the-voiceless", "name": "Voice of the Voiceless", "artist": "vedan", "type": "Single", "year": 2021, "verify": true },
+    { "slug": "enjoy-enjaami", "name": "Enjoy Enjaami", "artist": "arivu", "type": "Single", "year": 2021, "description": "With Dhee." }
+  ],
+  "eventLinks": {
+    "desi-hip-hop-delhi-rap-carnival": ["divine", "mc-stan", "badshah", "prabh-deep", "hanumankind", "swadesi"],
+    "desi-hip-hop-delhi-beat-fest": ["emiway-bantai", "naezy", "brodha-v", "king", "vedan", "kaam-bhaari"],
+    "desi-hip-hop-delhi-cypher-showcase": ["yo-yo-honey-singh", "sofia-ashraf", "hard-kaur", "baba-sehgal", "mc-tod-fod", "arivu"]
+  }
+}
