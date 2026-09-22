@@ -1,5 +1,5 @@
 import '../styles/AskDhh.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ArtistImage from './ArtistImage';
 
@@ -9,6 +9,11 @@ function AskDHH() {
     const [convo, setConvo] = useState([]);
     const [thinking, setThinking] = useState(false);
     const [dbData, setDbData] = useState({ artists: [], tracks: [], events: [] });
+    const messagesEndRef = useRef(null);
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [convo, thinking]);
 
     useEffect(() => {
         Promise.all([
@@ -36,16 +41,6 @@ function AskDHH() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    system: `You are Ask DHH, an assistant for a Desi Hip Hop website.
-                            Rules:
-                            - Answer ONLY using the provided context. Never invent information.
-                            - Refuse inappropriate requests politely.
-                            - When asked about a track, focus on track details. Keep artist info brief.
-                            - Use the artist bio field when asked about an artist.
-                            - Match artist names flexibly (e.g. KR$NA = Krsna).
-                            - Plain text only. No markdown or formatting.
-                            Respond ONLY with this JSON format, no text outside it:
-                            {"message": "your response here", "cards": [{"type": "artist|track|event", "slug": "slug-from-context"}]}`,
                     messages: [...history, { role: 'user', content: input }]
                 })
             });
@@ -114,6 +109,7 @@ function AskDHH() {
                             </div>
                         ))}
                         {thinking && <p className="ask-dhh-thinking">Thinking...</p>}
+                        <div ref={messagesEndRef} />
                     </div>
                     <div className="ask-dhh-input-row">
                         <input

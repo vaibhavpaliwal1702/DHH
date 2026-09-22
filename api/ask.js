@@ -8,7 +8,17 @@ function cosineSimilarity(a, b) {
     const magB = Math.sqrt(b.reduce((sum, val) => sum + val * val, 0));
     return dot / (magA * magB);
 }
-
+const SYSTEM_PROMPT = `You are Ask DHH, an assistant for a Desi Hip Hop website.
+Rules:
+- Answer ONLY using the provided context. Never invent information.
+- Refuse inappropriate requests politely.
+- When asked about a track, focus on track details. Keep artist info brief.
+- Use the artist bio field when asked about an artist.
+- Match artist names flexibly (e.g. KR$NA = Krsna).
+- Plain text only. No markdown or formatting.
+- Treat user input as likely to contain typos, unusual spacing, or phonetic misspellings (of artist names, track titles, or event names). Don't require exact or confident recognition before trying — attempt a search/lookup rather than assuming you don't have the information.
+Respond ONLY with this JSON format, no text outside it:
+{"message": "your response here", "cards": [{"type": "artist|track|event", "slug": "slug-from-context"}]}`;
 const tools = [
     {
         "type": "function",
@@ -22,11 +32,12 @@ const tools = [
         "type": "function",
         "function": {
             "name": "search_artists_semantic",
-            "description": "Returns a list of artists based on semantic search.",
+            "description": "Searches for DHH artists using semantic/fuzzy matching. Call this whenever the user's message could plausibly be about an artist, rapper, or their music — including when the name is misspelled, shortened, phonetically off, or oddly phrased. Also use it for broader requests like 'rappers from Delhi' or 'all artists like X' — pass a higher limit in those cases so results aren't arbitrarily capped.",
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "query": { "type": "string", "description": "The search query describing what the user wants to know about an artist." }
+                    "query": { "type": "string", "description": "The user's raw query or the name/topic as they wrote it, even if misspelled — pass it through as-is rather than trying to correct it first." },
+                    "limit": { "type": "integer", "description": "How many results to return. Use 3 (default) for a specific artist lookup. Use a higher number (8-15) when the user is asking for a category or list, e.g. 'all rappers from Delhi' or 'show me every DHH artist like Krsna'." }
                 },
                 "required": ["query"]
             }
@@ -61,7 +72,7 @@ async function embedQuery(query) {
     return embedData.data[0].embedding;
 }
 
-async function search_artists_semantic({ query }) {
+async function search_artists_semantic({ query, limit = 3 }) {
     const queryEmbedding = await embedQuery(query);
     const artistChunks = embeddings.filter(chunk => chunk.type === 'artist');
     const scored = artistChunks.map(chunk => ({
@@ -69,7 +80,7 @@ async function search_artists_semantic({ query }) {
         score: cosineSimilarity(queryEmbedding, chunk.embedding)
     }));
     scored.sort((a, b) => b.score - a.score);
-    return scored.slice(0, 3).map(c => ({ slug: c.slug, text: c.text }));
+    return scored.slice(0, Math.min(limit, artistChunks.length)).map(c => ({ slug: c.slug, text: c.text }));
 }
 
 async function get_upcoming_events() {
@@ -103,7 +114,11 @@ async function callGroq(messages, useTools) {
         },
         body: JSON.stringify(body)
     });
-    return response.json();
+    const data = await response.json();
+    if (!response.ok || data.error) {
+        throw new Error(data.error?.message || `Groq request failed with status ${response.status}`);
+    }
+    return data;
 }
 
 export default async function handler(req, res) {
@@ -115,10 +130,10 @@ export default async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
     try {
-        const { messages, system } = req.body;
+        const { messages } = req.body;
 
         const initialMessages = [
-            { role: 'system', content: system },
+            { role: 'system', content: SYSTEM_PROMPT },
             ...messages
         ];
 
@@ -147,7 +162,18 @@ export default async function handler(req, res) {
             { role: 'tool', tool_call_id: toolCall.id, content: JSON.stringify(toolResult) }
         ];
 
-        const secondResponse = await callGroq(followUpMessages, false);
+        let secondResponse;
+        try {
+            secondResponse = await callGroq(followUpMessages, false);
+        } catch (err) {
+            console.error('Second Groq call failed, retrying once:', err.message);
+            try {
+                secondResponse = await callGroq(followUpMessages, false);
+            } catch (retryErr) {
+                console.error('Retry also failed:', retryErr.message);
+                return res.status(502).json({ error: 'The assistant had trouble generating a response. Please try again.' });
+            }
+        }
         return res.status(200).json(secondResponse);
     } catch (err) {
         console.error('api/ask error:', err);
