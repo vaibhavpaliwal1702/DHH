@@ -34,7 +34,7 @@ function AskDHH() {
         const history = convo.map(turn =>
             turn.type === 'user'
                 ? { role: 'user', content: turn.text }
-                : { role: 'assistant', content: JSON.stringify({ message: turn.message, cards: turn.cards }) }
+                : { role: 'assistant', content: turn.message }
         );
         try {
             const response = await fetch('/api/ask', {
@@ -46,9 +46,7 @@ function AskDHH() {
             });
 
             const data = await response.json();
-            const text = data.choices[0].message.content;
-            const parsed = JSON.parse(text);
-            setConvo(prev => [...prev, { type: 'assistant', message: parsed.message, cards: parsed.cards }]);
+            setConvo(prev => [...prev, { type: 'assistant', message: data.message, cards: data.cards || [] }]);
         } catch (err) {
             console.error('AskDHH error:', err);
             setConvo(prev => [...prev, { type: 'assistant', message: 'Something went wrong. Try again.', cards: [] }]);

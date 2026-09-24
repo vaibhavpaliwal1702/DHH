@@ -16,6 +16,10 @@ function cosineSimilarity(a, b) {
 }
 
 
+// The model never has to produce JSON: it always answers in plain language,
+// and the server builds the {message, cards} envelope itself from whichever
+// tool result (if any) actually ran. This removes the JSON-formatting duty
+// (and the fake "JSON" tool-call misfire it caused) entirely.
 const SYSTEM_PROMPT = `You are Ask DHH, an assistant for a Desi Hip Hop website.
 Rules:
 - Answer ONLY using the provided context. Never invent information.
@@ -23,10 +27,9 @@ Rules:
 - When asked about a track, focus on track details. Keep artist info brief.
 - Use the artist bio field when asked about an artist.
 - Match artist names flexibly (e.g. KR$NA = Krsna).
-- Plain text only. No markdown or formatting.
+- Respond in plain, natural language only. No markdown, no JSON, no other structured format.
 - Treat user input as likely to contain typos, unusual spacing, or phonetic misspellings (of artist names, track titles, or event names). Don't require exact or confident recognition before trying — attempt a search/lookup rather than assuming you don't have the information.
-Respond ONLY with this JSON format, no text outside it:
-{"message": "your response here", "cards": [{"type": "artist|track|event", "slug": "slug-from-context"}]}`;
+If answering requires artist, track, or event information you don't already have, call the appropriate tool. Otherwise answer directly.`;
 
 const tools = [
     {
@@ -112,6 +115,21 @@ async function get_event_by_slug({ slug }) {
 
 const toolImpl = { get_upcoming_events, search_artists_semantic, get_event_by_slug };
 
+// Builds the cards shown alongside the reply from whatever tool actually ran —
+// the model never decides this, so there's nothing for it to get wrong.
+function buildCards(toolName, toolResult) {
+    if (toolName === 'get_upcoming_events' && Array.isArray(toolResult)) {
+        return toolResult.map(e => ({ type: 'event', slug: e.slug }));
+    }
+    if (toolName === 'get_event_by_slug' && toolResult) {
+        return [{ type: 'event', slug: toolResult.slug }];
+    }
+    if (toolName === 'search_artists_semantic' && Array.isArray(toolResult)) {
+        return toolResult.map(a => ({ type: 'artist', slug: a.slug }));
+    }
+    return [];
+}
+
 // ---- Groq call helper ----
 
 async function callGroq(messages, useTools) {
@@ -144,12 +162,18 @@ app.post('/api/ask', async (req, res) => {
         ...messages
     ];
 
-    const firstResponse = await callGroq(initialMessages, true);
+    let firstResponse;
+    try {
+        firstResponse = await callGroq(initialMessages, true);
+    } catch (err) {
+        console.error('First Groq call failed:', err.message);
+        return res.status(502).json({ message: 'The assistant had trouble responding. Please try again.', cards: [] });
+    }
     const firstMessage = firstResponse.choices[0].message;
 
-    // 2. No tool call — model answered directly, done.
+    // 2. No tool call — model answered directly, no cards to attach.
     if (!firstMessage.tool_calls) {
-        return res.status(200).json(firstResponse);
+        return res.status(200).json({ message: (firstMessage.content || '').trim(), cards: [] });
     }
 
     // 3. Tool call requested — execute it, then send the result back for a real answer.
@@ -166,9 +190,12 @@ app.post('/api/ask', async (req, res) => {
     }
 
     const followUpMessages = [
-        ...initialMessages,
-        firstMessage,
-        { role: 'tool', tool_call_id: toolCall.id, content: JSON.stringify(toolResult) }
+        { role: 'system', content: SYSTEM_PROMPT },
+        ...messages,
+        {
+            role: 'user',
+            content: `Context from tool "${toolCall.function.name}":\n${JSON.stringify(toolResult)}\n\nUsing ONLY this context, answer the user's most recent message above.`
+        }
     ];
 
     let secondResponse;
@@ -180,10 +207,15 @@ app.post('/api/ask', async (req, res) => {
             secondResponse = await callGroq(followUpMessages, false);
         } catch (retryErr) {
             console.error('Retry also failed:', retryErr.message);
-            return res.status(502).json({ error: 'The assistant had trouble generating a response. Please try again.' });
+            return res.status(502).json({ message: 'The assistant had trouble generating a response. Please try again.', cards: [] });
         }
     }
-    return res.status(200).json(secondResponse);
+
+    const secondMessage = secondResponse.choices[0].message;
+    return res.status(200).json({
+        message: (secondMessage.content || '').trim(),
+        cards: buildCards(toolCall.function.name, toolResult)
+    });
 });
 
 const PORT = 3002;
